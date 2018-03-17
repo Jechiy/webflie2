@@ -90,7 +90,7 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
         firstUser: false,
         fetchFiles: function (callback) {
             $scope.FileList.qnFiles = [];
-            $http.jsonp('http://lililil.tiger.mopaasapp.com' + '/list?callback=JSON_CALLBACK').
+            $http.jsonp('http://ipan.butterfly.mopaasapp.com' + '/list?callback=JSON_CALLBACK').
             success(function (data) {
                 $scope.FileList.qnFiles = data;
                 $scope.NetUtils.firstUser = data[0]?false:true;
@@ -103,12 +103,12 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
             });
         },
         login: function () {
-            $http.post('http://lililil.tiger.mopaasapp.com' + '/login', {
+            $http.post('http://ipan.butterfly.mopaasapp.com' + '/login', {
                 passwd: CryptoJS.MD5($scope.Config.secKey).toString(CryptoJS.enc.Hex)
             }, {
                 withCredentials: true
             }).success(function (data) {
-                localStorage.domain = 'lililil.tiger.mopaasapp.com';
+                localStorage.domain = 'http://ipan.butterfly.mopaasapp.com';
                 $scope.NetUtils.fetchFiles(function () {
                     $scope.FileList.getFileListWithPrefix($scope.FilePath.getPrefix());
                 });
@@ -119,7 +119,7 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
             });
         },
         logout: function () {
-            $http.post('http://lililil.tiger.mopaasapp.com' + '/logout', {
+            $http.post('http://ipan.butterfly.mopaasapp.com' + '/logout', {
                 action: 'logout'
             }, {
                 withCredentials: true
@@ -131,7 +131,7 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
             });
         },
         getUploadToken: function () {
-            $http.jsonp('http://lililil.tiger.mopaasapp.com' + '/uptoken?callback=JSON_CALLBACK').
+            $http.jsonp('http://ipan.butterfly.mopaasapp.com' + '/uptoken?callback=JSON_CALLBACK').
             success(function (data) {
                 $rootScope.globalConfig.uploadToken = data.upToken;
             }).error(function () {
@@ -142,7 +142,7 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
             if (!key) return;
             var keyString = $scope.FilePath.getPrefix() + key.name;
             if (key.encrypted) keyString += '@SECloud';
-            $http.jsonp('http://lililil.tiger.mopaasapp.com' + '/downloadurl?key=' + keyString + '&&callback=JSON_CALLBACK').
+            $http.jsonp('http://ipan.butterfly.mopaasapp.com' + '/downloadurl?key=' + keyString + '&&callback=JSON_CALLBACK').
             success(function (data) {
                 $rootScope.globalConfig.downloadUrl = data.downloadUrl;
                 callback && callback(data.downloadUrl);
@@ -154,7 +154,7 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
             if (!key) return;
             var keyString = $scope.FilePath.getPrefix() + key.name;
             keyString += key.encrypted ? '@SECloud' : '';
-            $http.post('http://lililil.tiger.mopaasapp.com' + '/delete', {
+            $http.post('http://ipan.butterfly.mopaasapp.com' + '/delete', {
                 key: keyString
             }, {
                 withCredentials: true
@@ -172,7 +172,7 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
             var keyDest = $scope.FilePath.getPrefix() + newFilename;
             keySrc += key.encrypted ? '@SECloud' : '';
             keyDest += key.encrypted ? '@SECloud' : '';
-            $http.post('http://lililil.tiger.mopaasapp.com' + '/move', {
+            $http.post('http://ipan.butterfly.mopaasapp.com' + '/move', {
                 keySrc: keySrc,
                 keyDest: keyDest
             }, {
